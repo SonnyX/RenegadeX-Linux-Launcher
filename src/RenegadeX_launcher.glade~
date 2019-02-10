@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.22.1 -->
+<interface>
+  <requires lib="gtk+" version="3.20"/>
+  <object class="GtkListStore" id="liststore1">
+    <columns>
+      <!-- column-name Server -->
+      <column type="gchararray"/>
+      <!-- column-name Map -->
+      <column type="gchararray"/>
+      <!-- column-name Players -->
+      <column type="gchararray"/>
+      <!-- column-name Ping -->
+      <column type="gchararray"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0" translatable="yes">FPI - FairPlay Inc</col>
+        <col id="1" translatable="yes">GoldRush</col>
+        <col id="2" translatable="yes">0/64</col>
+        <col id="3" translatable="yes">22</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">Sonny's Test Server</col>
+        <col id="1" translatable="yes">Devil's Den</col>
+        <col id="2" translatable="yes">1/64</col>
+        <col id="3" translatable="yes">12</col>
+      </row>
+    </data>
+  </object>
+  <object class="GtkTextBuffer" id="textbuffer1">
+    <property name="text" translatable="yes"></property>
+  </object>
+  <object class="GtkApplicationWindow" id="launcher_window">
+    <property name="can_focus">False</property>
+    <property name="show_menubar">False</property>
+    <child type="titlebar">
+      <object class="GtkHeaderBar" id="Renegade">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="title" translatable="yes">RenegadeX Launcher</property>
+        <property name="subtitle" translatable="yes">Logged in as: SonnyX</property>
+        <property name="show_close_button">True</property>
+        <child>
+          <object class="GtkMenuButton">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <child>
+              <object class="GtkImage">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="icon_name">view-more-symbolic</property>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="pack_type">end</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="GtkBox">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkBox">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <child>
+              <object class="GtkTreeView">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="model">liststore1</property>
+                <property name="headers_clickable">False</property>
+                <property name="expander_column">1</property>
+                <property name="search_column">0</property>
+                <property name="fixed_height_mode">True</property>
+                <property name="show_expanders">False</property>
+                <property name="enable_grid_lines">both</property>
+                <property name="activate_on_single_click">True</property>
+                <child internal-child="selection">
+                  <object class="GtkTreeSelection"/>
+                </child>
+                <child>
+                  <object class="GtkTreeViewColumn" id="1">
+                    <property name="resizable">True</property>
+                    <property name="sizing">fixed</property>
+                    <property name="title" translatable="yes">Server Name</property>
+                    <property name="expand">True</property>
+                    <property name="clickable">True</property>
+                    <property name="sort_indicator">True</property>
+                    <property name="sort_column_id">0</property>
+                    <child>
+                      <object class="GtkCellRendererText"/>
+                      <attributes>
+                        <attribute name="text">0</attribute>
+                      </attributes>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkTreeViewColumn" id="2">
+                    <property name="resizable">True</property>
+                    <property name="sizing">fixed</property>
+                    <property name="title" translatable="yes">Map</property>
+                    <property name="expand">True</property>
+                    <property name="clickable">True</property>
+                    <property name="sort_indicator">True</property>
+                    <property name="sort_column_id">1</property>
+                    <child>
+                      <object class="GtkCellRendererText"/>
+                      <attributes>
+                        <attribute name="text">1</attribute>
+                      </attributes>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkTreeViewColumn" id="3">
+                    <property name="resizable">True</property>
+                    <property name="sizing">fixed</property>
+                    <property name="title" translatable="yes">Players</property>
+                    <property name="expand">True</property>
+                    <property name="clickable">True</property>
+                    <property name="sort_indicator">True</property>
+                    <property name="sort_column_id">2</property>
+                    <child>
+                      <object class="GtkCellRendererText"/>
+                      <attributes>
+                        <attribute name="text">2</attribute>
+                      </attributes>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkTreeViewColumn" id="4">
+                    <property name="resizable">True</property>
+                    <property name="sizing">fixed</property>
+                    <property name="title" translatable="yes">Ping</property>
+                    <property name="expand">True</property>
+                    <property name="clickable">True</property>
+                    <property name="sort_indicator">True</property>
+                    <property name="sort_column_id">3</property>
+                    <child>
+                      <object class="GtkCellRendererText"/>
+                      <attributes>
+                        <attribute name="text">3</attribute>
+                      </attributes>
+                    </child>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkBox">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="halign">start</property>
+                <property name="orientation">vertical</property>
+                <child>
+                  <object class="GtkImage" id="image2">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="pixbuf">Resources/defaultBanner.png</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage" id="image1">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="valign">baseline</property>
+                    <property name="pixbuf">Resources/___map-pic-cnc-walls_314.png</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton">
+                    <property name="label" translatable="yes">Join Server</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkFlowBox">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <child>
+                      <object class="GtkFlowBoxChild">
+                        <property name="width_request">100</property>
+                        <property name="height_request">35</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="halign">start</property>
+                            <property name="label" translatable="yes">Game Length: 0</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkFlowBoxChild">
+                        <property name="width_request">100</property>
+                        <property name="height_request">35</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="halign">start</property>
+                            <property name="label" translatable="yes">Max Players: 0</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkFlowBoxChild">
+                        <property name="width_request">100</property>
+                        <property name="height_request">35</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="halign">start</property>
+                            <property name="label" translatable="yes">Vehicle Limit: 8</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkFlowBoxChild">
+                        <property name="width_request">100</property>
+                        <property name="height_request">35</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="halign">start</property>
+                            <property name="label" translatable="yes">Mine Limit: 24</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkFlowBoxChild">
+                        <property name="width_request">100</property>
+                        <property name="height_request">35</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="halign">start</property>
+                            <property name="label" translatable="yes">Game Mode: C&amp;C</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">3</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkScrolledWindow">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="shadow_type">etched-in</property>
+            <child>
+              <object class="GtkTextView">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="margin_top">4</property>
+                <property name="margin_bottom">4</property>
+                <property name="editable">False</property>
+                <property name="wrap_mode">word</property>
+                <property name="cursor_visible">False</property>
+                <property name="buffer">textbuffer1</property>
+                <property name="accepts_tab">False</property>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkEntry">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="margin_top">5</property>
+            <property name="margin_bottom">5</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">2</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="GtkApplicationWindow" id="updater_window">
+    <property name="can_focus">False</property>
+    <child type="titlebar">
+      <object class="GtkHeaderBar" id="Renegade1">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="title" translatable="yes">RenegadeX Updater</property>
+        <property name="subtitle" translatable="yes">Updating to "Open Beta 5.370"</property>
+        <property name="show_close_button">True</property>
+        <child>
+          <object class="GtkMenuButton">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <child>
+              <object class="GtkImage">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="icon_name">view-more-symbolic</property>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="pack_type">end</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="GtkLevelBar">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="value">4.6100000000000003</property>
+        <property name="max_value">5</property>
+      </object>
+    </child>
+  </object>
+</interface>

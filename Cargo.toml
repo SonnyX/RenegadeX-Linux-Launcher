@@ -1,0 +1,15 @@
+[package]
+name = "renegade_x_launcher_linux"
+version = "0.1.0"
+authors = ["SonnyX"]
+edition = "2018"
+
+[dependencies]
+gio = "^0"
+gtk = "^0"
+reqwest = "0.9.5"
+json = "0.11.13"
+
+[features]
+#default = ["gtk_3_22_30", "futures-stable"]
+gtk_3_10 = ["gtk/v3_10"]
