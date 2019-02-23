@@ -1,7 +1,8 @@
-extern crate gio;
-extern crate gtk;
+#![windows_subsystem="windows"]
+
 extern crate reqwest;
 extern crate json;
+extern crate sciter;
 
 use std::env::args;
 
@@ -9,67 +10,76 @@ use std::process;
 use std::io;
 use std::fs::File;
 
-#[cfg(feature = "gtk_3_10")]
-mod example {
-    use gio;
-    use gtk;
+use sciter::{Value, Element, HELEMENT};
+use sciter::dom::event::*;
 
-    use gio::prelude::*;
-    use gtk::prelude::*;
+#[derive(Default)]
+struct Handler {
+  progress: Option<Element>,
+  state: bool,
+}
 
-    use gtk::{ApplicationWindow, Builder, Button, MessageDialog};
+impl sciter::EventHandler for Handler {
+  fn get_subscription(&mut self) -> Option<EVENT_GROUPS> {
+    Some(default_events() | EVENT_GROUPS::HANDLE_TIMER)
+  }
 
-    use std::env::args;
+  fn attached(&mut self, root: sciter::HELEMENT) {
+  }
 
+  fn detached(&mut self, root: sciter::HELEMENT) {
+  }
 
-    pub fn build_ui(application: &gtk::Application) {
-        let glade_src = include_str!("RenegadeX_launcher.glade");
-        let builder = Builder::new_from_string(glade_src);
+  fn on_event(&mut self, root: HELEMENT, source: HELEMENT, target: HELEMENT, code: BEHAVIOR_EVENTS, phase: PHASE_MASK, reason: EventReason) -> bool {
+    false
+  }
 
-        let window: ApplicationWindow = builder.get_object("launcher_window").expect("Couldn't get window1");
-        //let bigbutton: Button = builder.get_object("button1").expect("Couldn't get button1");
-        //let dialog: MessageDialog = builder.get_object("messagedialog1")
-        //                                   .expect("Couldn't get messagedialog1");
+  fn on_timer(&mut self, root: HELEMENT, timer_id: u64) -> bool {
+    false
+  }
 
-        window.set_application(application);
-        window.connect_delete_event(move |win, _| {
-            win.destroy();
-            Inhibit(false)
-        });
+  fn document_complete(&mut self, root: sciter::HELEMENT, source: sciter::HELEMENT) {
 /*
-        bigbutton.connect_clicked(move |_| {
-            dialog.run();
-            dialog.hide();
-        });
+    let root = Element::from(root);
+    let mut smth = root.find_first("tbody").unwrap().unwrap();
+    let mut entry = Element::with_parent("tr", &mut smth).unwrap();
+    entry.set_attribute("class", "server-entry");
+    let mut server = Element::with_text("td", "FPI first thingymagic").unwrap();
+    entry.append(&server).expect("wtf?");
+    let mut map = Element::with_text("td", "Trilogy").unwrap();
+    entry.append(&map).expect("wtf?");
+    let mut players = Element::with_text("td", "4/64").unwrap();
+    entry.append(&players).expect("wtf?");
+    let mut ping = Element::with_text("td", "18ms").unwrap();
+    entry.append(&ping).expect("wtf?");
+    
+    //let smth = body.select("table");
+    //println!("{:?}", smth);
 */
-        window.show_all();
-    }
-
-    pub fn main() {
-        let application = gtk::Application::new("com.github.builder_basics",
-                                                gio::ApplicationFlags::empty())
-                                           .expect("Initialization failed...");
-
-        application.connect_startup(move |app| {
-            build_ui(app);
-        });
-        application.connect_activate(|_| {});
-
-        application.run(&args().collect::<Vec<_>>());
-    }
+  }
 }
 
-
-#[cfg(feature = "gtk_3_10")]
 fn main() {
-    example::main()
+  // Step 1: Include the 'minimal.html' file as a byte array.
+  // Hint: Take a look into 'minimal.html' which contains some tiscript code.
+  //let html = include_bytes!("minimal.htm");
+
+  sciter::set_options(
+    sciter::RuntimeOptions::ScriptFeatures(
+      sciter::SCRIPT_RUNTIME_FEATURES::ALLOW_SYSINFO as u8 | // Enables Sciter.machineName()
+      sciter::SCRIPT_RUNTIME_FEATURES::ALLOW_FILE_IO as u8 | // Enables opening file dialog (view.selectFile())
+      sciter::SCRIPT_RUNTIME_FEATURES::ALLOW_SOCKET_IO as u8
+    )
+  ).unwrap(); // Enables connecting to the inspector via Ctrl+Shift+I
+  let mut frame = sciter::Window::new();
+  frame.event_handler(Handler::default());
+  frame.load_file("src/dom/frontpage.htm");
+  //frame.load_html(html, Some("example://minimal.htm"));
+  frame.run_app();
 }
 
-#[cfg(not(feature = "gtk_3_10"))]
-fn main() {
-    println!("This example requires GTK 3.10 or later");
-    println!("Did you forget to build with `--features gtk_3_10`?");
-}
+
+
 
 pub struct Launcher {
   //for example: ~/RenegadeX/
@@ -201,16 +211,6 @@ impl Launcher {
 #[cfg(test)]
 mod tests {
   use super::*;
-/*
-  #[test]
-  fn downloader() {
-    let mut patcher : Downloader = Downloader::new("Linux".to_string());
-    let update : bool = patcher.update_available();
-    println!("{}", patcher.mirrors.unwrap().pretty(2 as u16));
- 
-    assert_eq!(update,true);
-  }
-*/
   #[test]
   fn launcher() {
     let mut launcher_instance : Launcher = Launcher::new("/home/sonny/RenegadeX/".to_string());
@@ -225,47 +225,3 @@ mod tests {
     }
   }
 }
-
-
-/*
-pub fn update_game() -> Result<(), reqwest::Error> {
-  //TODO: check if instuctions_hash has changed since last time the game was started and if the previous update was succesfully completed.
-  let mirrors = &release_data["game"]["mirrors"];
-  let mirror_url = format!("{}{}/", &mirrors[0]["url"], &release_data["game"]["patch_path"]);
-  let instructions_url = format!("{}instructions.json", &mirror_url);
-  println!("Downloading instructions.json:");
-  let mirror_response = reqwest::get(&instructions_url)?.text()?;
-  println!("Downloading complete! Rustifying!");
-  let mirror_data = json::parse(&mirror_response).unwrap();
-  println!("Rustifying complete! Showing first entry:");
-  println!("{}", &mirror_data[0]);
-  //probably the part where tokio should kick in!
-
-  let first_file_download_url = format!("{}full/{}",&mirror_url,&mirror_data[0]["NewHash"]);
-  let mut first_file_download_response = reqwest::get(&first_file_download_url)?;
-  println!("Downloaded first file into memory!");
-  let mut file_delta: Vec<u8> = vec![];
-  let file_delta_size = match first_file_download_response.copy_to(&mut file_delta) {
-    Ok(result) => result,
-    Err(e) => panic!("Copy failed: {}", e)
-  };
-  if file_delta_size != mirror_data[0]["FullReplaceSize"].as_u64().unwrap() {
-    panic!("delta file does not match the correct size.");
-  }
-  
-  let mut slice: &[u8] = &file_delta;
-  let mut dest = {
-    let fname = "/home/sonny/eclipse-workspace/renegade_x_launcher/delta";
-        match File::create(&fname) {
-          Ok(file) => file,
-          Err(e) => panic!("Error!")
-        }
-  };
-  match io::copy(&mut slice, &mut dest) {
-    Ok(o) => o,
-    Err(e) => panic!("Error!")
-  };
-
-  Ok(())
-}
-*/
