@@ -1,4 +1,4 @@
-#![windows_subsystem="windows"]
+//#![windows_subsystem="windows"]
 
 extern crate reqwest;
 extern crate json;
@@ -73,7 +73,10 @@ fn main() {
   ).unwrap(); // Enables connecting to the inspector via Ctrl+Shift+I
   let mut frame = sciter::Window::new();
   frame.event_handler(Handler::default());
-  frame.load_file("src/dom/frontpage.htm");
+  let mut path = std::env::current_exe().unwrap();
+  path.pop();
+  path.push("dom/frontpage.htm");
+  frame.load_file(path.to_str().unwrap());
   //frame.load_html(html, Some("example://minimal.htm"));
   frame.run_app();
 }
